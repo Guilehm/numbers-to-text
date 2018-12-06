@@ -1,18 +1,23 @@
+from decimal import Decimal
 from dict_numbers import number_names
 
 
 def convert(number):
-    if number <= 20:
-        return '{number_name} reais'.format(number_name=number_names(number))
-    if number <= 100 and str(number).endswith('0'):
-        return '{number_name} reais'.format(number_name=number_names(number))
-    if number < 100:
-        first = str(number)[:1] + '0'
-        last = str(number)[1:]
+    number_decimal = Decimal(number)
+    if number_decimal <= 20:
+        return '{number_name} reais'.format(number_name=number_names(number_decimal))
+    if number_decimal <= 100 and str(number_decimal).endswith('0'):
+        return '{number_name} reais'.format(number_name=number_names(number_decimal))
+
+    if number_decimal < 100:
+        first = str(number_decimal)[:1] + '0'
+        last = str(number_decimal)[1:]
         return '{first} e {last} reais'.format(
             first=number_names(int(first)),
             last=number_names(int(last))
         )
+    if number_decimal <= 1000 and str(number_decimal).endswith('00'):
+        return '{number_name} reais'.format(number_name=number_names(number_decimal))
 
 
 def test_integer_numbers():
@@ -49,3 +54,15 @@ def test_integer_numbers_higher_than_twenty():
     assert convert(95) == 'noventa e cinco reais'
     assert convert(99) == 'noventa e nove reais'
 
+
+def test_integer_hundreds():
+    assert convert(100) == 'cem reais'
+    assert convert(200) == 'duzentos reais'
+    assert convert(300) == 'trezentos reais'
+    assert convert(400) == 'quatrocentos reais'
+    assert convert(500) == 'quinhentos reais'
+    assert convert(600) == 'seiscentos reais'
+    assert convert(700) == 'setecentos reais'
+    assert convert(800) == 'oitocentos reais'
+    assert convert(900) == 'novecentos reais'
+    assert convert(1000) == 'mil reais'
