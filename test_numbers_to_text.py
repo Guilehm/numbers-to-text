@@ -50,7 +50,7 @@ def small_numbers(number):
 def thousand_numbers(number):
     number_str = str(number)
     thousands = number_str[: len(number_str) - 3]
-    if number <= 999999 and number_str.endswith('000'):
+    if number < 100000 and number_str.endswith('000'):
         return '{} {}'.format(small_numbers(thousands), small_numbers(1000))
     if number < 1100:
         return full_number_names(number_str[:1] + '000') + ' e ' + small_numbers(number_str[1:])
@@ -63,7 +63,7 @@ def thousand_numbers(number):
             weights = unities_plural if int(group) > 1 else unities_singular
             if not group.startswith('0'):
                 result.append('{} {} '.format(small_numbers(group), weights[weight]))
-            else:
+            elif not group.startswith('000'):
                 result.append('e {} {} '.format(small_numbers(group), weights[weight]))
         return ''.join(result).strip()
 
@@ -128,5 +128,11 @@ def test_thousand_numbers():
     assert thousand_numbers(922022) == 'novecentos e vinte e dois mil e vinte e dois'
 
     assert thousand_numbers(1111111) == 'um milhão cento e onze mil cento e onze'
-    assert thousand_numbers(1000000) == 'um milhão cento e onze mil cento e onze'
+    assert thousand_numbers(1000000) == 'um milhão'
+    assert thousand_numbers(1000001) == 'um milhão e um'
+    assert thousand_numbers(1000011) == 'um milhão e onze'
+    assert thousand_numbers(1000111) == 'um milhão cento e onze'
+    assert thousand_numbers(100000000) == 'cem milhões'
+    assert thousand_numbers(100000001) == 'cem milhões e um'
+    assert thousand_numbers(100500001) == 'cem milhões quinhentos mil e um'
 
