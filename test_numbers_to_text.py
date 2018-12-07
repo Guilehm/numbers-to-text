@@ -61,7 +61,10 @@ def thousand_numbers(number):
         splitted_list = reversed(list(split_in_three(number)))
         for group, weight in splitted_list:
             weights = unities_plural if int(group) > 1 else unities_singular
-            result.append('{} {} '.format(small_numbers(group), weights[weight]))
+            if not group.startswith('0'):
+                result.append('{} {} '.format(small_numbers(group), weights[weight]))
+            else:
+                result.append('e {} {} '.format(small_numbers(group), weights[weight]))
         return ''.join(result).strip()
 
 
@@ -119,4 +122,11 @@ def test_thousand_numbers():
     assert thousand_numbers(999000) == 'novecentos e noventa e nove mil'
 
     assert thousand_numbers(2012) == 'dois mil e doze'
+    assert thousand_numbers(5095) == 'cinco mil e noventa e cinco'
+    assert thousand_numbers(15092) == 'quinze mil e noventa e dois'
+    assert thousand_numbers(515092) == 'quinhentos e quinze mil e noventa e dois'
+    assert thousand_numbers(922022) == 'novecentos e vinte e dois mil e vinte e dois'
+
+    assert thousand_numbers(1111111) == 'um milhão cento e onze mil cento e onze'
+    assert thousand_numbers(1000000) == 'um milhão cento e onze mil cento e onze'
 

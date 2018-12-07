@@ -1,5 +1,6 @@
 
-def number_names(number):
+def full_number_names(number):
+
     dict_numbers = {
         0: 'zero',
         1: 'um',
@@ -39,6 +40,5 @@ def number_names(number):
         800: 'oitocentos',
         900: 'novecentos',
         1000: 'mil',
-        1000000: 'milhão',
     }
-    return dict_numbers.get(number)
+    return dict_numbers.get(int(number))
