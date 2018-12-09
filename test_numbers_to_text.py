@@ -5,12 +5,12 @@ unities_plural = ['', 'mil', 'milhões', 'bilhões']
 
 
 def split_in_three(number):
-    number = str(number)  # refactor
+    number_str = str(number)
     numbers = []
     while True:
-        numbers.insert(0, number[-3:])
-        number = number[:-3]
-        if not number:
+        numbers.insert(0, number_str[-3:])
+        number_str = number_str[:-3]
+        if not number_str:
             break
     for weight, number in enumerate(reversed(numbers)):
         yield (number, weight)
@@ -33,7 +33,7 @@ def small_numbers(number):
         return '{number_name}'.format(number_name=full_number_names(number))
 
     if number_int < 100:
-        first = number_str[:1] + '0' # refactor
+        first = number_str[:1] + '0'
         last = number_str[1:]
         return '{first} e {last}'.format(
             first=full_number_names(int(first)),
@@ -45,7 +45,7 @@ def small_numbers(number):
         dozens = number_str[-2:]
         return 'cento' + ' e ' + small_numbers(dozens)
     elif number_int <= 1000 > 100:
-        hundred = number_str[:1] + '00'  # refactor
+        hundred = number_str[:1] + '00'
         dozens = number_str[-2:]
         return full_number_names(hundred) + ' e ' + small_numbers(dozens)
 
@@ -92,7 +92,7 @@ def convert(number):
             sn if sn != 'zero' else '',
             ' reais' if sn != 'zero' else '',
             ' e ' if sn != 'zero' else '',
-            dn + ' centavo' if dn and dn == 'um' else dn + ' centavos'
+            dn + ' centavo' if dn and dn == 'um' else dn + ' centavos',
         )
     sn = small_numbers(number)
     return '{}{}{}{}{}'.format(
@@ -119,7 +119,10 @@ def test_convert():
     assert convert(1000000) == 'um milhão de reais'
     assert convert(5000000) == 'cinco milhões de reais'
     assert convert(50000000) == 'cinquenta milhões de reais'
-    assert convert(1000000.01) == 'um milhão de reais e um centavo'
+    assert convert(53128040.32) == 'cinquenta e três milhões cento e vinte e oito mil e quarenta reais ' \
+                                   'e trinta e dois centavos'
+    assert convert(99999999.99) == 'noventa e nove milhões novecentos e noventa e nove mil novecentos e ' \
+                                   'noventa e nove reais e noventa e nove centavos'
 
 
 def test_decimal_numbers():
@@ -143,7 +146,6 @@ def test_small_numbers():
     assert small_numbers(500) == 'quinhentos'
     assert small_numbers(900) == 'novecentos'
     assert small_numbers(1000) == 'mil'
-
     assert small_numbers(21) == 'vinte e um'
     assert small_numbers(55) == 'cinquenta e cinco'
     assert small_numbers(99) == 'noventa e nove'
@@ -183,13 +185,11 @@ def test_thousand_numbers():
     assert thousand_numbers(99000) == 'noventa e nove mil'
     assert thousand_numbers(150000) == 'cento e cinquenta mil'
     assert thousand_numbers(999000) == 'novecentos e noventa e nove mil'
-
     assert thousand_numbers(2012) == 'dois mil e doze'
     assert thousand_numbers(5095) == 'cinco mil e noventa e cinco'
     assert thousand_numbers(15092) == 'quinze mil e noventa e dois'
     assert thousand_numbers(515092) == 'quinhentos e quinze mil e noventa e dois'
     assert thousand_numbers(922022) == 'novecentos e vinte e dois mil e vinte e dois'
-
     assert thousand_numbers(1111111) == 'um milhão cento e onze mil cento e onze'
     assert thousand_numbers(1000000) == 'um milhão'
     assert thousand_numbers(1000001) == 'um milhão e um'
