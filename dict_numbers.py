@@ -1,7 +1,4 @@
-
-def full_number_names(number):
-
-    dict_numbers = {
+full_number_names = {
         0: 'zero',
         1: 'um',
         2: 'dois',
@@ -41,4 +38,3 @@ def full_number_names(number):
         900: 'novecentos',
         1000: 'mil',
     }
-    return dict_numbers.get(int(number))
