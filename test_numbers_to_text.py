@@ -1,4 +1,4 @@
-from main import convert, decimal_numbers, small_numbers, thousand_numbers
+from functions import convert, decimal_numbers, small_numbers, thousand_numbers
 
 
 def test_convert():
