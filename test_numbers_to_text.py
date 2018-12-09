@@ -5,7 +5,7 @@ unities_plural = ['', 'mil', 'milhões', 'bilhões']
 
 
 def split_in_three(number):
-    number = str(number) # refactor
+    number = str(number)  # refactor
     numbers = []
     while True:
         numbers.insert(0, number[-3:])
@@ -17,48 +17,52 @@ def split_in_three(number):
 
 
 def small_numbers(number):
-    number = int(number)
-    if number == 0:
+    number_int = int(number)
+    number_str = str(number_int)
+    if number_int > 1000:
+        return thousand_numbers(number)
+    if number_int == 0:
         return 'zero'
-    if number == 1:
+    if number_int == 1:
         return 'um'
-    if number <= 20:
+    if number_int <= 20:
         return '{number_name}'.format(number_name=full_number_names(number))
-    if number <= 100 and str(number).endswith('0'):
+    if number_int <= 100 and number_str.endswith('0'):
         return '{number_name}'.format(number_name=full_number_names(number))
-    if number <= 1000 and str(number).endswith('000'):
+    if number_int <= 1000 and number_str.endswith('000'):
         return '{number_name}'.format(number_name=full_number_names(number))
 
-    if number < 100:
-        first = str(number)[:1] + '0' # refactor
-        last = str(number)[1:]
+    if number_int < 100:
+        first = number_str[:1] + '0' # refactor
+        last = number_str[1:]
         return '{first} e {last}'.format(
             first=full_number_names(int(first)),
             last=full_number_names(int(last))
         )
-    if number <= 1000 and str(number).endswith('00'):
+    if number_int <= 1000 and number_str.endswith('00'):
         return '{number_name}'.format(number_name=full_number_names(number))
-    if number <= 200 > 100:
-        dozens = str(number)[-2:]
+    if number_int <= 200 > 100:
+        dozens = number_str[-2:]
         return 'cento' + ' e ' + small_numbers(dozens)
-    elif number <= 1000 > 100:
-        hundred = str(number)[:1] + '00'  # refactor
-        dozens = str(number)[-2:]
+    elif number_int <= 1000 > 100:
+        hundred = number_str[:1] + '00'  # refactor
+        dozens = number_str[-2:]
         return full_number_names(hundred) + ' e ' + small_numbers(dozens)
 
 
 def thousand_numbers(number):
+    int_number = int(number)
     number_str = str(number)
     thousands = number_str[: len(number_str) - 3]
-    if number < 100000 and number_str.endswith('000'):
+    if int_number < 100000 and number_str.endswith('000'):
         return '{} {}'.format(small_numbers(thousands), small_numbers(1000))
-    if number < 1100:
+    if int_number < 1100:
         return full_number_names(number_str[:1] + '000') + ' e ' + small_numbers(number_str[1:])
-    if number < 2000:
+    if int_number < 2000:
         return small_numbers(number_str[:1] + '000') + ' ' + small_numbers(number_str[1:])
     else:
         result = []
-        splitted_list = reversed(list(split_in_three(number)))
+        splitted_list = reversed(list(split_in_three(int_number)))
         for group, weight in splitted_list:
             weights = unities_plural if int(group) > 1 else unities_singular
             if not group.startswith('0'):
@@ -75,6 +79,20 @@ def decimal_numbers(number):
         if len(decimals) == 1:
             return small_numbers(decimals + '0')
         return small_numbers(decimals)
+    return small_numbers(number)
+
+
+def convert(number):
+    number_str = str(number).replace(',', '.')
+    if '.' in number_str:
+        thousands, decimals = number_str.split('.', -1)
+        return small_numbers(thousands) + ' reais e ' + decimal_numbers(number_str) + ' centavos'
+    return small_numbers(number)
+
+
+def test_convert():
+    assert convert(1000.10) == 'mil reais e dez centavos'
+    assert convert(100000.10) == 'cem mil reais e dez centavos'
 
 
 def test_decimal_numbers():
@@ -83,6 +101,7 @@ def test_decimal_numbers():
     assert decimal_numbers(10.04) == 'quatro'
     assert decimal_numbers(1000.04) == 'quatro'
     assert decimal_numbers('1.000.04') == 'quatro'
+    assert decimal_numbers(100000.99) == 'noventa e nove'
 
 
 def test_small_numbers():
