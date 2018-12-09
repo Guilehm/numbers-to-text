@@ -68,6 +68,23 @@ def thousand_numbers(number):
         return ''.join(result).strip()
 
 
+def decimal_numbers(number):
+    number_str = str(number).replace(',', '.')
+    if '.' in number_str:
+        decimals = number_str.split('.', -1)[-1]
+        if len(decimals) == 1:
+            return small_numbers(decimals + '0')
+        return small_numbers(decimals)
+
+
+def test_decimal_numbers():
+    assert decimal_numbers(10.4) == 'quarenta'
+    assert decimal_numbers(10.40) == 'quarenta'
+    assert decimal_numbers(10.04) == 'quatro'
+    assert decimal_numbers(1000.04) == 'quatro'
+    assert decimal_numbers('1.000.04') == 'quatro'
+
+
 def test_small_numbers():
     assert small_numbers(1) == 'um'
     assert small_numbers(2) == 'dois'
