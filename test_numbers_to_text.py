@@ -86,13 +86,38 @@ def convert(number):
     number_str = str(number).replace(',', '.')
     if '.' in number_str:
         thousands, decimals = number_str.split('.', -1)
-        return small_numbers(thousands) + ' reais e ' + decimal_numbers(number_str) + ' centavos'
-    return small_numbers(number)
+        sn = small_numbers(thousands)
+        dn = decimal_numbers(number_str)
+        return '{}{}{}{}'.format(
+            sn if sn != 'zero' else '',
+            ' reais' if sn != 'zero' else '',
+            ' e ' if sn != 'zero' else '',
+            dn + ' centavo' if dn and dn == 'um' else dn + ' centavos'
+        )
+    sn = small_numbers(number)
+    return '{}{}{}{}{}'.format(
+        sn,
+        'reais' if sn == 'zero' else '',
+        ' real' if sn == 'um' else '',
+        ' de reais' if 'milhão' in sn or 'milhões' in sn else '',
+        ' reais' if sn != 'zero' and sn != 'um' and not ('milhão' in sn or 'milhões' in sn) else ''
+    )
 
 
 def test_convert():
     assert convert(1000.10) == 'mil reais e dez centavos'
     assert convert(100000.10) == 'cem mil reais e dez centavos'
+    assert convert(0.10) == 'dez centavos'
+    assert convert(0.01) == 'um centavo'
+    assert convert(0.99) == 'noventa e nove centavos'
+    assert convert(1) == 'um real'
+    assert convert(10) == 'dez reais'
+    assert convert(999000.01) == 'novecentos e noventa e nove mil reais e um centavo'
+    assert convert(100000.01) == 'cem mil reais e um centavo'
+    assert convert(60000.11) == 'sessenta mil reais e onze centavos'
+    assert convert(1000) == 'mil reais'
+    assert convert(1000000) == 'um milhão de reais'
+    assert convert(1000000.01) == 'um milhão de reais e um centavo'
 
 
 def test_decimal_numbers():
@@ -171,4 +196,3 @@ def test_thousand_numbers():
     assert thousand_numbers(100000000) == 'cem milhões'
     assert thousand_numbers(100000001) == 'cem milhões e um'
     assert thousand_numbers(100500001) == 'cem milhões quinhentos mil e um'
-
