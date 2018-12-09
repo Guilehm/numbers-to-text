@@ -2,28 +2,32 @@ from functions import convert, decimal_numbers, small_numbers, thousand_numbers
 
 
 def test_convert():
+    assert convert(1.00) == 'um real'
+    assert convert(1000.54) == 'mil reais e cinquenta e quatro centavos'
     assert convert(1000.10) == 'mil reais e dez centavos'
     assert convert(100000.10) == 'cem mil reais e dez centavos'
     assert convert(0.10) == 'dez centavos'
     assert convert(0.01) == 'um centavo'
     assert convert(0.99) == 'noventa e nove centavos'
-    assert convert(1) == 'um real'
-    assert convert(10) == 'dez reais'
+    assert convert(1.00) == 'um real'
+    assert convert(10.00) == 'dez reais'
     assert convert(999000.01) == 'novecentos e noventa e nove mil reais e um centavo'
     assert convert(100000.01) == 'cem mil reais e um centavo'
     assert convert(60000.11) == 'sessenta mil reais e onze centavos'
-    assert convert(1000) == 'mil reais'
-    assert convert(1000000) == 'um milhão de reais'
-    assert convert(5000000) == 'cinco milhões de reais'
-    assert convert(50000000) == 'cinquenta milhões de reais'
+    assert convert(1000.00) == 'mil reais'
+    assert convert(1000000.00) == 'um milhão de reais'
+    assert convert(5000000.00) == 'cinco milhões de reais'
+    assert convert(50000000.00) == 'cinquenta milhões de reais'
     assert convert(53128040.32) == 'cinquenta e três milhões cento e vinte e oito mil e quarenta reais ' \
                                    'e trinta e dois centavos'
     assert convert(99999999.99) == 'noventa e nove milhões novecentos e noventa e nove mil novecentos e ' \
                                    'noventa e nove reais e noventa e nove centavos'
+    assert convert(999999999.99) == 'novecentos e noventa e nove milhões novecentos e noventa e nove mil novecentos e ' \
+                                   'noventa e nove reais e noventa e nove centavos'
 
 
 def test_decimal_numbers():
-    assert decimal_numbers(10.4) == 'quarenta'
+    assert decimal_numbers(10.40) == 'quarenta'
     assert decimal_numbers(10.40) == 'quarenta'
     assert decimal_numbers(10.04) == 'quatro'
     assert decimal_numbers(1000.04) == 'quatro'

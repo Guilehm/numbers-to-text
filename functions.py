@@ -84,17 +84,17 @@ def decimal_numbers(number):
 
 def convert(number):
     number_str = str(number).replace(',', '.')
-    if '.' in number_str:
-        thousands, decimals = number_str.split('.', -1)
-        sn = small_numbers(thousands)
-        dn = decimal_numbers(number_str)
+    thousands, decimals = number_str.split('.', -1)
+    sn = small_numbers(thousands)
+    dn = decimal_numbers(number_str)
+    if dn != 'zero':
         return '{}{}{}{}'.format(
             sn if sn != 'zero' else '',
             ' reais' if sn != 'zero' else '',
             ' e ' if sn != 'zero' else '',
             dn + ' centavo' if dn and dn == 'um' else dn + ' centavos',
         )
-    sn = small_numbers(number)
+    sn = small_numbers(thousands)
     return '{}{}{}{}{}'.format(
         sn,
         'reais' if sn == 'zero' else '',
