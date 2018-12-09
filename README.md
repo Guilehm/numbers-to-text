@@ -26,13 +26,13 @@ Instale o Pytest (opcional)
 # Utilização
 
 **Execute o arquivo `main.py`:**
-- Digite um número:
+- Digite um número (sempre com duas casas decimais):
 ```
-99100.4
+18157.88
 ```
 - Será impresso:
 ```
-noventa e nove mil cem reais e quarenta centavos
+dezoito mil cento e cinquenta e sete reais e oitenta e oito centavos
 ```
 - Repita este processo ou digite 's' para sair.
 
