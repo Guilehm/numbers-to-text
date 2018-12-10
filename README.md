@@ -7,7 +7,7 @@
 # Requisitos
 
 * Python
-* Pytest
+* Pytest (opcional)
 
 # Instalação
 
