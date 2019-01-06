@@ -51,18 +51,18 @@ def small_numbers(number):
 
 
 def thousand_numbers(number):
-    int_number = int(number)
+    number_int = int(number)
     number_str = str(number)
     thousands = number_str[: len(number_str) - 3]
-    if int_number < 100000 and number_str.endswith('000'):
+    if number_int < 100000 and number_str.endswith('000'):
         return '{} {}'.format(small_numbers(thousands), small_numbers(1000))
-    if int_number < 1100:
+    if number_int < 1100:
         return full_number_names.get(int((number_str[:1] + '000'))) + ' e ' + small_numbers(number_str[1:])
-    if int_number < 2000:
+    if number_int < 2000:
         return small_numbers(number_str[:1] + '000') + ' ' + small_numbers(number_str[1:])
     else:
         result = []
-        splitted_list = reversed(list(split_in_three(int_number)))
+        splitted_list = reversed(list(split_in_three(number_int)))
         for group, weight in splitted_list:
             weights = unities_plural if int(group) > 1 else unities_singular
             if not group.startswith('0'):
