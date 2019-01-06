@@ -62,8 +62,8 @@ def thousand_numbers(number):
         return small_numbers(number_str[:1] + '000') + ' ' + small_numbers(number_str[1:])
     else:
         result = []
-        splitted_list = reversed(list(split_in_three(number_int)))
-        for group, weight in splitted_list:
+        split_list = reversed(list(split_in_three(number_int)))
+        for group, weight in split_list:
             weights = unities_plural if int(group) > 1 else unities_singular
             if not group.startswith('0'):
                 result.append('{} {} '.format(small_numbers(group), weights[weight]))
