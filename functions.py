@@ -26,11 +26,11 @@ def small_numbers(number):
     if number_int == 1:
         return 'um'
     if number_int <= 20:
-        return '{number_name}'.format(number_name=full_number_names.get(int(number)))
+        return '{number_name}'.format(number_name=full_number_names.get(number_int))
     if number_int <= 100 and number_str.endswith('0'):
-        return '{number_name}'.format(number_name=full_number_names.get(int(number)))
+        return '{number_name}'.format(number_name=full_number_names.get(number_int))
     if number_int <= 1000 and number_str.endswith('000'):
-        return '{number_name}'.format(number_name=full_number_names.get(int(number)))
+        return '{number_name}'.format(number_name=full_number_names.get(number_int))
 
     if number_int < 100:
         first = number_str[:1] + '0'
