@@ -40,7 +40,7 @@ def small_numbers(number):
             last=full_number_names.get(int(last)),
         )
     if number_int <= 1000 and number_str.endswith('00'):
-        return '{number_name}'.format(number_name=full_number_names.get(int(number)))
+        return '{number_name}'.format(number_name=full_number_names.get(number_int))
     if number_int <= 200 > 100:
         dozens = number_str[-2:]
         return 'cento' + ' e ' + small_numbers(dozens)
