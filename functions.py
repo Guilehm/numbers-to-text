@@ -22,9 +22,9 @@ def small_numbers(number):
     if number_int > 1000:
         return thousand_numbers(number)
     if number_int == 0:
-        return 'zero'
+        return full_number_names.get(0)
     if number_int == 1:
-        return 'um'
+        return full_number_names.get(1)
     if number_int <= 20:
         return '{number_name}'.format(number_name=full_number_names.get(number_int))
     if number_int <= 100 and number_str.endswith('0'):
