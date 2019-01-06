@@ -16,6 +16,7 @@ def test_convert():
     assert convert(60000.11) == 'sessenta mil reais e onze centavos'
     assert convert(1000.00) == 'mil reais'
     assert convert(1000000.00) == 'um milhão de reais'
+    assert convert(1000000.01) == 'um milhão de reais e um centavo'
     assert convert(5000000.00) == 'cinco milhões de reais'
     assert convert(50000000.00) == 'cinquenta milhões de reais'
     assert convert(53128040.32) == 'cinquenta e três milhões cento e vinte e oito mil e quarenta reais ' \
