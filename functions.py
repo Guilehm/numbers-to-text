@@ -88,13 +88,13 @@ def convert(number):
     sn = small_numbers(thousands)
     dn = decimal_numbers(number_str)
     if dn != 'zero':
-        return '{}{}{}{}{}'.format(
+        return '{}{}{}{}'.format(
             sn if sn != 'zero' else '',
-            ' de reais' if sn != 'zero' and 'milhão' in sn else '',
-            ' reais' if sn != 'zero' and 'milhão' not in sn else '',
+            ' reais' if sn != 'zero' else '',
             ' e ' if sn != 'zero' else '',
             dn + ' centavo' if dn and dn == 'um' else dn + ' centavos',
         )
+    sn = small_numbers(thousands)
     return '{}{}{}{}{}'.format(
         sn,
         'reais' if sn == 'zero' else '',
