@@ -7,11 +7,9 @@ unities_plural = ['', 'mil', 'milhões', 'bilhões']
 def split_in_three(number):
     number_str = str(number)
     numbers = []
-    while True:
+    while number_str:
         numbers.insert(0, number_str[-3:])
         number_str = number_str[:-3]
-        if not number_str:
-            break
     for weight, number in enumerate(reversed(numbers)):
         yield (number, weight)
 
