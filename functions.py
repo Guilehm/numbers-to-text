@@ -24,11 +24,17 @@ def small_numbers(number):
     if number_int == 1:
         return full_number_names.get(1)
     if number_int <= 20:
-        return '{number_name}'.format(number_name=full_number_names.get(number_int))
+        return '{number_name}'.format(
+            number_name=full_number_names.get(number_int)
+        )
     if number_int <= 100 and number_str.endswith('0'):
-        return '{number_name}'.format(number_name=full_number_names.get(number_int))
+        return '{number_name}'.format(
+            number_name=full_number_names.get(number_int)
+        )
     if number_int <= 1000 and number_str.endswith('000'):
-        return '{number_name}'.format(number_name=full_number_names.get(number_int))
+        return '{number_name}'.format(
+            number_name=full_number_names.get(number_int)
+        )
 
     if number_int < 100:
         first = number_str[:1] + '0'
@@ -38,14 +44,18 @@ def small_numbers(number):
             last=full_number_names.get(int(last)),
         )
     if number_int <= 1000 and number_str.endswith('00'):
-        return '{number_name}'.format(number_name=full_number_names.get(number_int))
+        return '{number_name}'.format(
+            number_name=full_number_names.get(number_int)
+        )
     if number_int <= 200 > 100:
         dozens = number_str[-2:]
         return 'cento' + ' e ' + small_numbers(dozens)
     elif number_int <= 1000 > 100:
         hundred = number_str[:1] + '00'
         dozens = number_str[-2:]
-        return full_number_names.get(int(hundred)) + ' e ' + small_numbers(dozens)
+        return full_number_names.get(
+            int(hundred)
+        ) + ' e ' + small_numbers(dozens)
 
 
 def thousand_numbers(number):
@@ -55,18 +65,26 @@ def thousand_numbers(number):
     if number_int < 100000 and number_str.endswith('000'):
         return '{} {}'.format(small_numbers(thousands), small_numbers(1000))
     if number_int < 1100:
-        return full_number_names.get(int((number_str[:1] + '000'))) + ' e ' + small_numbers(number_str[1:])
+        return full_number_names.get(
+            int((number_str[:1] + '000'))
+        ) + ' e ' + small_numbers(number_str[1:])
     if number_int < 2000:
-        return small_numbers(number_str[:1] + '000') + ' ' + small_numbers(number_str[1:])
+        return small_numbers(
+            number_str[:1] + '000'
+        ) + ' ' + small_numbers(number_str[1:])
     else:
         result = []
         split_list = reversed(list(split_in_three(number_int)))
         for group, weight in split_list:
             weights = unities_plural if int(group) > 1 else unities_singular
             if not group.startswith('0'):
-                result.append('{} {} '.format(small_numbers(group), weights[weight]))
+                result.append('{} {} '.format(
+                    small_numbers(group), weights[weight]
+                ))
             elif not group.startswith('000'):
-                result.append('e {} {} '.format(small_numbers(group), weights[weight]))
+                result.append('e {} {} '.format(
+                    small_numbers(group), weights[weight]
+                ))
         return ''.join(result).strip()
 
 
@@ -98,5 +116,7 @@ def convert(number):
         'reais' if sn == 'zero' else '',
         ' real' if sn == 'um' else '',
         ' de reais' if 'milhão' in sn or 'milhões' in sn else '',
-        ' reais' if sn != 'zero' and sn != 'um' and not ('milhão' in sn or 'milhões' in sn) else ''
+        ' reais' if sn != 'zero' and sn != 'um' and not (
+                'milhão' in sn or 'milhões' in sn
+        ) else ''
     )
